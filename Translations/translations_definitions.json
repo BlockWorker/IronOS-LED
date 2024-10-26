@@ -621,6 +621,12 @@
             "maxLen": 7,
             "maxLen2": 15,
             "description": "Changes the device language on multi-lingual builds."
+        },
+        {
+            "id": "LightRingBrightness",
+            "maxLen": 5,
+            "maxLen2": 11,
+            "description": "Brightness of the optional LED ring, in percent. Only turns on during soldering."
         }
     ]
 }

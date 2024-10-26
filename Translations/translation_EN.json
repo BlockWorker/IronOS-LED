@@ -314,6 +314,10 @@
         "LanguageSwitch": {
             "displayText": "Language:\n EN     English",
             "description": ""
+        },
+        "LightRingBrightness": {
+            "displayText": "LED Ring\nBrightness",
+            "description": "Brightness of the optional LED ring (10 = brightest). Enabled while soldering and in this menu."
         }
     }
 }

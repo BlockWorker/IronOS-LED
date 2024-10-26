@@ -14,6 +14,7 @@
 #include "hal_flash.h"
 #include "history.hpp"
 #include "main.hpp"
+#include "bl702_pwm.h"
 
 // These control the period's of time used for the PWM
 const uint16_t powerPWM         = 255;
@@ -148,6 +149,22 @@ bool isTipDisconnected() {
 void setStatusLED(const enum StatusLED state) {
   // Dont have one
 }
+
+void setLEDRingPWM(uint8_t level) {
+  if (level > 10) level = 0;
+
+  if (level == 0) {
+    if (PWM_Channel_Is_Enabled(LED_PWM_Channel)) {
+      PWM_Channel_Disable(LED_PWM_Channel);
+    }
+  } else {
+    PWM_Channel_Set_Threshold2(LED_PWM_Channel, level);
+    if (!PWM_Channel_Is_Enabled(LED_PWM_Channel)) {
+      PWM_Channel_Enable(LED_PWM_Channel);
+    }
+  }
+}
+
 void setBuzzer(bool on) {}
 
 uint8_t       lastTipResistance        = 0; // default to unknown

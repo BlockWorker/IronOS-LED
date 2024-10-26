@@ -27,6 +27,9 @@
 #define SCL_Pin              GPIO_PIN_11
 #define SDA_Pin              GPIO_PIN_10
 
+#define LED_PWM_Out_Pin      GPIO_PIN_12
+#define LED_PWM_Channel      PWM_CH2
+
 #define USB_DM_Pin    GPIO_PIN_8
 #define QC_DP_LOW_Pin GPIO_PIN_5
 

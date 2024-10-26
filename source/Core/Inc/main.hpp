@@ -18,6 +18,7 @@ void                startGUITask(void const *argument);
 void                startPIDTask(void const *argument);
 void                startMOVTask(void const *argument);
 void                startPOWTask(void const *argument);
+void                startLEDTask(void const *argument);
 extern TaskHandle_t pidTaskNotification;
 extern int32_t      powerSupplyWattageLimit;
 extern uint8_t      accelInit;

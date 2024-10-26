@@ -33,6 +33,11 @@ static const size_t POWTaskStackSize = 512 / 2;
 uint32_t            POWTaskBuffer[POWTaskStackSize];
 osStaticThreadDef_t POWTaskControlBlock;
 
+osThreadId          LEDTaskHandle;
+static const size_t LEDTaskStackSize = 512 / 2;
+uint32_t            LEDTaskBuffer[LEDTaskStackSize];
+osStaticThreadDef_t LEDTaskControlBlock;
+
 // End FreeRTOS
 // Main sets up the hardware then hands over to the FreeRTOS kernel
 int main(void) {
@@ -62,6 +67,10 @@ int main(void) {
   /* definition and creation of GUITask - The OLED control & update*/
   osThreadStaticDef(GUITask, startGUITask, osPriorityBelowNormal, 0, GUITaskStackSize, GUITaskBuffer, &GUITaskControlBlock);
   GUITaskHandle = osThreadCreate(osThread(GUITask), NULL);
+
+  /* definition and creation ofLEDTask - LED ring control*/
+  osThreadStaticDef(LEDTask, startLEDTask, osPriorityBelowNormal, 0, LEDTaskStackSize, LEDTaskBuffer, &LEDTaskControlBlock);
+  LEDTaskHandle = osThreadCreate(osThread(LEDTask), NULL);
 
   resetWatchdog();
 

@@ -96,6 +96,9 @@ enum StatusLED {
 };
 void setStatusLED(const enum StatusLED state);
 
+//Set the LED ring PWM duty cycle (level 0 = 0%, level 10 = 100%)
+void setLEDRingPWM(uint8_t level);
+
 void setBuzzer(bool on);
 
 // preStartChecks are run until they return 0

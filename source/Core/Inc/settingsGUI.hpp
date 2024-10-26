@@ -40,4 +40,7 @@ void                  enterSettingsMenu();
 void                  warnUser(const char *warning, const TickType_t timeout);
 extern const menuitem rootSettingsMenu[];
 
+//whether the user is currently inspecting/adjusting the LED ring setting
+extern bool isLEDRingSetting;
+
 #endif /* GUI_HPP_ */

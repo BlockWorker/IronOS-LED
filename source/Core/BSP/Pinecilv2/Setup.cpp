@@ -84,6 +84,22 @@ void setup_pwm(void) {
 
   PWM_Channel_Init(&cfg);
   PWM_Channel_Disable(PWM_Channel);
+
+  // Setup the PWM for the LED ring
+  PWM_CH_CFG_Type ledcfg = {
+      LED_PWM_Channel,   // channel
+      PWM_CLK_XCLK,      // Clock
+      PWM_STOP_GRACEFUL, // Stop mode
+      PWM_POL_NORMAL,    // Normal Polarity
+      200,               // Clock Div
+      10,                // Period
+      0,                 // Thres 1 - start at beginng
+      5,                 // Thres 2 - turn off at 50%
+      0,                 // Interrupt pulse count
+  };
+
+  PWM_Channel_Init(&ledcfg);
+  PWM_Channel_Disable(LED_PWM_Channel);
 }
 
 const ADC_Chan_Type adc_tip_pos_chans[]
