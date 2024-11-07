@@ -315,9 +315,13 @@
             "displayText": "Language:\n EN     English",
             "description": ""
         },
-        "LightRingBrightness": {
+        "LEDRingBrightness": {
             "displayText": "LED Ring\nBrightness",
-            "description": "Brightness of the optional LED ring (10 = brightest). Enabled while soldering and in this menu."
+            "description": "Brightness of the optional LED ring (10 = brightest). Enabled while soldering, in this menu, and in debug menu."
+        },
+        "LEDRingDefaultOn": {
+            "displayText": "LED Ring\nDefault On",
+            "description": "Whether the LED ring is enabled during soldering by default. Turn on/off by pressing both buttons during soldering."
         }
     }
 }

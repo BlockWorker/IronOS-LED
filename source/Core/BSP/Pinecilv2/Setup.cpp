@@ -91,7 +91,7 @@ void setup_pwm(void) {
       PWM_CLK_XCLK,      // Clock
       PWM_STOP_GRACEFUL, // Stop mode
       PWM_POL_NORMAL,    // Normal Polarity
-      200,               // Clock Div
+      400,               // Clock Div
       10,                // Period
       0,                 // Thres 1 - start at beginng
       5,                 // Thres 2 - turn off at 50%

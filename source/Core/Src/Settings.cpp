@@ -104,7 +104,8 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {MIN_TEMP_C, MAX_TEMP_F, 5, 90},                                       // ProfilePhase5Temp
     {10, 180, 5, 30},                                                      // ProfilePhase5Duration
     {1, 10, 1, 2},                                                         // ProfileCooldownSpeed
-    {0, 10, 1, 0},                                                         // LightRingBrightness
+    {1, 10, 1, 3},                                                         // LEDRingBrightness
+    {0, 1, 1, 0},                                                          // LEDRingDefaultOn
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
 

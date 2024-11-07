@@ -67,9 +67,10 @@ enum SettingsOptions {
   ProfilePhase5Temp              = 50, // Temperature to target for the end of phase 5
   ProfilePhase5Duration          = 51, // Target duration for phase 5
   ProfileCooldownSpeed           = 52, // Maximum allowed cooldown speed in degrees per second
-  LightRingBrightness            = 53, // Light ring brightness
+  LEDRingBrightness              = 53, // LED ring brightness
+  LEDRingDefaultOn               = 54, // LED ring on by default
   //
-  SettingsOptionsLength = 54, //
+  SettingsOptionsLength = 55, //
 };
 
 typedef enum {

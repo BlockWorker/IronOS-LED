@@ -26,12 +26,19 @@ extern OperatingMode currentMode;
 // whether the voltage is acceptable for LED operation (if too low: physically can't drive LEDs)
 static bool acceptableLEDVoltage = false;
 
+// whether the LED ring is enabled in soldering mode (default defined in settings)
+volatile bool ledRing_enabledSoldering = false;
+
+
 /* StartLEDTask function */
 void startLEDTask(void const *argument) {
   (void)argument;
   
   // initially disable LED ring
   setLEDRingPWM(0);
+
+  // load default setting for soldering mode
+  ledRing_enabledSoldering = getSettingValue(SettingsOptions::LEDRingDefaultOn) == 1;
 
   // wait half a second to ensure we're booted up
   osDelay(5 * TICKS_100MS);
@@ -46,18 +53,17 @@ void startLEDTask(void const *argument) {
     }
 
     // whether LED ring should be enabled in current state - requires acceptable voltage
-    // (soldering/boost, adjusting/inspecting LED ring brightness option, or idle and holding front button)
+    // (soldering/boost, adjusting/inspecting LED ring brightness option, or debug)
     bool enable_light =
       acceptableLEDVoltage && (
-        currentMode == OperatingMode::soldering ||
-        currentMode == OperatingMode::boost ||
+        ((currentMode == OperatingMode::soldering || currentMode == OperatingMode::boost) && ledRing_enabledSoldering) ||
         (currentMode == OperatingMode::settings && isLEDRingSetting) ||
-        (currentMode == OperatingMode::idle && getButtonA())
+        (currentMode == OperatingMode::debug)
       );
 
     // write LED ring state to PWM
     if (enable_light) {
-      setLEDRingPWM(getSettingValue(SettingsOptions::LightRingBrightness));
+      setLEDRingPWM(getSettingValue(SettingsOptions::LEDRingBrightness));
     } else {
       setLEDRingPWM(0);
     }

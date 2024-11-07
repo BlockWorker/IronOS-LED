@@ -623,10 +623,16 @@
             "description": "Changes the device language on multi-lingual builds."
         },
         {
-            "id": "LightRingBrightness",
+            "id": "LEDRingBrightness",
             "maxLen": 5,
             "maxLen2": 11,
-            "description": "Brightness of the optional LED ring, in percent. Only turns on during soldering."
+            "description": "Brightness of the optional LED ring, in percent. Enabled while soldering, in this menu, and in debug menu."
+        },
+        {
+            "id": "LEDRingDefaultOn",
+            "maxLen": 6,
+            "maxLen2": 13,
+            "description": "Whether the LED ring is enabled during soldering by default. Turn on/off by pressing both buttons during soldering."
         }
     ]
 }

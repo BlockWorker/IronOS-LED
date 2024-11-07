@@ -116,7 +116,9 @@ static void displayHallEffect(void);
 static bool showHallEffect(void);
 #endif /* HALL_SENSOR */
 
-static void displayLightRingBrightness(void);
+static void displayLEDRingBrightness(void);
+static bool setLEDRingDefaultOn(void);
+static void displayLEDRingDefaultOn(void);
 
 // Menu functions
 
@@ -164,7 +166,8 @@ static bool enterAdvancedMenu(void);
  *  Profile Phase 5 Temperature
  *  Profile Phase 5 Duration (s)
  *  Profile Cooldown Max Temperature Change Per Second
- *  Light Ring Brightness
+ *  LED Ring Brightness
+ *  LED Ring Default On
  *
  * Power Saving
  *  Motion Sensitivity
@@ -288,7 +291,8 @@ const menuitem solderingMenu[] = {
    *  Profile Phase 5 Temperature
    *  Profile Phase 5 Duration (s)
    *  Profile Cooldown Max Temperature Change Per Second
-   *  Light Ring Brightness
+   *  LED Ring Brightness
+   *  LED Ring Default On
    */
   /* Boost Temp */
   {SETTINGS_DESC(SettingsItemIndex::BoostTemperature), setBoostTemp, displayBoostTemp, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::BoostTemperature, 5},
@@ -330,8 +334,10 @@ const menuitem solderingMenu[] = {
   /* Profile Cooldown Speed */
   {SETTINGS_DESC(SettingsItemIndex::ProfileCooldownSpeed), nullptr, displayProfileCooldownSpeed, showProfileOptions, SettingsOptions::ProfileCooldownSpeed, SettingsItemIndex::ProfileCooldownSpeed, 5},
 #endif /* PROFILE_SUPPORT */
-  /* Light Ring Brightness */
-  {SETTINGS_DESC(SettingsItemIndex::LightRingBrightness), nullptr, displayLightRingBrightness, nullptr, SettingsOptions::LightRingBrightness, SettingsItemIndex::LightRingBrightness, 6},
+  /* LED Ring Brightness */
+  {SETTINGS_DESC(SettingsItemIndex::LEDRingBrightness), nullptr, displayLEDRingBrightness, nullptr, SettingsOptions::LEDRingBrightness, SettingsItemIndex::LEDRingBrightness, 6},
+  /* LED Ring Default On */
+  {SETTINGS_DESC(SettingsItemIndex::LEDRingDefaultOn), setLEDRingDefaultOn, displayLEDRingDefaultOn, nullptr, SettingsOptions::LEDRingDefaultOn, SettingsItemIndex::LEDRingDefaultOn, 7},
   /* vvvv end of menu marker. DO NOT REMOVE vvvv */
   {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}
   /* ^^^^ end of menu marker. DO NOT REMOVE ^^^^ */
@@ -731,7 +737,22 @@ static void displayHallEffect(void) { OLED::printNumber(getSettingValue(Settings
 static bool showHallEffect(void) { return getHallSensorFitted(); }
 #endif /* HALL_SENSOR */
 
-static void displayLightRingBrightness(void) { OLED::printNumber(getSettingValue(SettingsOptions::LightRingBrightness), 2, FontStyle::LARGE); }
+static void displayLEDRingBrightness(void) { OLED::printNumber(getSettingValue(SettingsOptions::LEDRingBrightness), 2, FontStyle::LARGE); }
+
+extern volatile bool ledRing_enabledSoldering;
+static bool setLEDRingDefaultOn(void) {
+  if (getSettingValue(SettingsOptions::LEDRingDefaultOn) < 1) {
+    setSettingValue(SettingsOptions::LEDRingDefaultOn, 1);
+    ledRing_enabledSoldering = true;
+    return true;
+  } else {
+    setSettingValue(SettingsOptions::LEDRingDefaultOn, 0);
+    ledRing_enabledSoldering = false;
+    return false;
+  }
+}
+
+static void displayLEDRingDefaultOn(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::LEDRingDefaultOn)); }
 
 static void setTempF(const enum SettingsOptions option) {
   uint16_t Temp = getSettingValue(option);
@@ -1101,7 +1122,7 @@ void gui_Menu(const menuitem *menu) {
       }
 
       if (menu == solderingMenu) {
-        isLEDRingSetting = (menu[currentScreen].autoSettingOption == SettingsOptions::LightRingBrightness);
+        isLEDRingSetting = (menu[currentScreen].autoSettingOption == SettingsOptions::LEDRingBrightness);
       }
 
       animOpenState = true;

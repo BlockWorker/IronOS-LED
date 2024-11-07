@@ -3,6 +3,7 @@
 #include "SolderingCommon.h"
 
 extern OperatingMode currentMode;
+extern volatile bool ledRing_enabledSoldering;
 
 void gui_solderingMode(uint8_t jumpToSleep) {
   /*
@@ -51,8 +52,10 @@ void gui_solderingMode(uint8_t jumpToSleep) {
           currentMode = OperatingMode::boost;
         }
         break;
-        // fall through
       case BUTTON_BOTH:
+        ledRing_enabledSoldering = !ledRing_enabledSoldering; //toggle LED ring
+        break;
+        // fall through
       case BUTTON_B_LONG:
       case BUTTON_F_SHORT:
       case BUTTON_B_SHORT:
@@ -70,6 +73,8 @@ void gui_solderingMode(uint8_t jumpToSleep) {
         currentMode = OperatingMode::soldering;
         break;
       case BUTTON_BOTH:
+        ledRing_enabledSoldering = !ledRing_enabledSoldering; //toggle LED ring
+        break;
       case BUTTON_B_LONG:
         return; // exit on back long hold
       case BUTTON_F_LONG:
